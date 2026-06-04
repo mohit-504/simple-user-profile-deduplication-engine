@@ -17,7 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class UserProfile {
-    private String userId;
+    private final String userId;
     private final String email;
     private String name;
     private String phone;
@@ -28,11 +28,9 @@ public class UserProfile {
         if(this == obj){
             return true;
         }
-
         if(obj==null || getClass() != obj.getClass()){
             return false;
         }
-
         UserProfile other = (UserProfile) obj;
         return Objects.equals(email, other.email);
     }
