@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.dedup.ProfileDedupEngine;
+import project.merge.ProfileIdentityResolver;
 import project.model.UserProfile;
 import project.utils.ProfilePrinter;
 
@@ -14,7 +15,8 @@ public class Main {
         // milestone1();
         // milestone2();
         // milestone3();
-        milestone4();
+        // milestone4();
+        milestone5();
     }
 
     public static void milestone1(){
@@ -69,5 +71,28 @@ public class Main {
 
         System.out.println("\nafter:");
         ProfilePrinter.printProfiles(uniqueProfiles);
+    }
+
+    public static void milestone5(){
+        UserProfile u1 = new UserProfile("U1", "alice@test.com", "Alice", "1111", System.currentTimeMillis());
+        UserProfile u2 = new UserProfile("U2", "alice@test.com", "Alice Duplicate", "1112", System.currentTimeMillis());
+        UserProfile u3 = new UserProfile("U3", "bob@test.com", "Bob", "2222", System.currentTimeMillis());
+        UserProfile u4 = new UserProfile("U4", "charlie@test.com", "Charlie", "3333", System.currentTimeMillis());
+        UserProfile u5 = new UserProfile("U5", "alice@test.com", "Alice Second Duplicate", "4444", System.currentTimeMillis());
+
+        List<UserProfile> profiles = new ArrayList<>();
+        profiles.add(u1);
+        profiles.add(u2);
+        profiles.add(u3);
+        profiles.add(u4);
+        profiles.add(u5);
+
+        System.out.println("before:");
+        ProfilePrinter.printProfiles(profiles);
+
+        List<UserProfile> afterMergeProfiles = ProfileIdentityResolver.resolve(profiles);
+
+        System.out.println("\nafter:");
+        ProfilePrinter.printProfiles(afterMergeProfiles);
     }
 }
