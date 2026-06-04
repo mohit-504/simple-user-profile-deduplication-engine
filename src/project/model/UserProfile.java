@@ -9,15 +9,36 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class UserProfile {
-    private final String userId;
+    private String userId;
+    private final String email;
     private String name;
-    private String email;
     private String phone;
     private long lastUpdated;
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+
+        if(obj==null || getClass() != obj.getClass()){
+            return false;
+        }
+
+        UserProfile other = (UserProfile) obj;
+        return Objects.equals(email, other.email);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(email);
+    }
 }
