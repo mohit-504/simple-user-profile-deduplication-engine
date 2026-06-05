@@ -16,7 +16,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class UserProfile {
+public class UserProfile implements Comparable<UserProfile> {
     private final String userId;
     private final String email;
     private String name;
@@ -38,5 +38,10 @@ public class UserProfile {
     @Override
     public int hashCode(){
         return Objects.hash(email);
+    }
+
+    @Override
+    public int compareTo(UserProfile other){
+        return this.getUserId().compareTo(other.getUserId());
     }
 }

@@ -3,8 +3,13 @@
 package project;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import project.comparator.EmailComparator;
+import project.comparator.LastUpdatedComparator;
+import project.comparator.NameComparator;
 import project.dedup.ProfileDedupEngine;
 import project.merge.ProfileIdentityResolver;
 import project.model.UserProfile;
@@ -16,7 +21,9 @@ public class Main {
         // milestone2();
         // milestone3();
         // milestone4();
-        milestone5();
+        // milestone5();
+        // milestone6();
+        milestone7();
     }
 
     public static void milestone1(){
@@ -94,5 +101,65 @@ public class Main {
 
         System.out.println("\nafter:");
         ProfilePrinter.printProfiles(afterMergeProfiles);
+    }
+
+    public static void milestone6(){
+        UserProfile u1 = new UserProfile("U5", "alice@test.com", "Alice", "1111", System.currentTimeMillis());
+        UserProfile u2 = new UserProfile("U1", "ruth@test.com", "Ruth", "1112", System.currentTimeMillis());
+        UserProfile u3 = new UserProfile("U3", "bob@test.com", "Bob", "2222", System.currentTimeMillis());
+        UserProfile u4 = new UserProfile("U2", "charlie@test.com", "Charlie", "3333", System.currentTimeMillis());
+        UserProfile u5 = new UserProfile("U4", "fred@test.com", "Fred", "4444", System.currentTimeMillis());
+
+        List<UserProfile> profiles = new ArrayList<>();
+        profiles.add(u1);
+        profiles.add(u2);
+        profiles.add(u3);
+        profiles.add(u4);
+        profiles.add(u5);
+
+        System.out.println("before sorting:");
+        ProfilePrinter.printProfiles(profiles);
+
+        Collections.sort(profiles);
+        System.out.println("\nafter ascending sorting:");
+        ProfilePrinter.printProfiles(profiles);
+
+        Collections.sort(profiles, Collections.reverseOrder());
+        System.out.println("\nafter descending sorting:");
+        ProfilePrinter.printProfiles(profiles);
+    }
+
+    public static void milestone7(){
+        UserProfile u1 = new UserProfile("U5", "alice@test.com", "Alice", "1111", System.currentTimeMillis());
+        UserProfile u2 = new UserProfile("U1", "ruth@test.com", "Ruth", "1112", System.currentTimeMillis());
+        UserProfile u3 = new UserProfile("U3", "bob@test.com", "Bob", "2222", System.currentTimeMillis());
+        UserProfile u4 = new UserProfile("U2", "charlie@test.com", "Charlie", "3333", System.currentTimeMillis());
+        UserProfile u5 = new UserProfile("U4", "fred@test.com", "Fred", "4444", System.currentTimeMillis());
+
+        List<UserProfile> profiles = new ArrayList<>();
+        profiles.add(u1);
+        profiles.add(u2);
+        profiles.add(u3);
+        profiles.add(u4);
+        profiles.add(u5);
+
+        System.out.println("before sorting:");
+        ProfilePrinter.printProfiles(profiles);
+
+        Collections.sort(profiles, new NameComparator());
+        System.out.println("\nafter sorting based on Name:");
+        ProfilePrinter.printProfiles(profiles);
+
+        Collections.sort(profiles, new EmailComparator());
+        System.out.println("\nafter sorting based on Email:");
+        ProfilePrinter.printProfiles(profiles);
+
+        Collections.sort(profiles, new LastUpdatedComparator());
+        System.out.println("\nafter sorting based on Last Updated Date (most recent first):");
+        ProfilePrinter.printProfiles(profiles);
+
+        System.out.println("\nsorting based on name using one line comparator");
+        profiles.sort(Comparator.comparing(UserProfile::getName));
+        ProfilePrinter.printProfiles(profiles);
     }
 }
